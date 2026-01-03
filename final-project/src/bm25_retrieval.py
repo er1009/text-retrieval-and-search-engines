@@ -1,4 +1,4 @@
-"""BM25 and BM25+RM3 retrieval using pyserini."""
+ """BM25 and BM25+RM3 retrieval using pyserini."""
 
 from __future__ import annotations
 
@@ -122,7 +122,7 @@ def batch_search_bm25(
     k: int = 1000,
     k1: float = 0.9,
     b: float = 0.4,
-    num_threads: int = 16,  # Use more threads for faster retrieval
+    num_threads: int = 8,  # Original working value
 ) -> dict[str, list[SearchResult]]:
     """
     Batch search using BM25 with multi-threading.
@@ -136,6 +136,9 @@ def batch_search_bm25(
     Returns:
         Dict mapping qid -> list of SearchResult
     """
+    # Pre-validate index once to avoid race conditions on first run
+    _ = get_searcher()
+    
     # Create a searcher per thread to avoid contention
     def search_single(qid_query):
         qid, query = qid_query
@@ -165,11 +168,14 @@ def batch_search_bm25_rm3(
     fb_docs: int = 10,
     fb_terms: int = 10,
     original_query_weight: float = 0.5,
-    num_threads: int = 16,  # Use more threads for faster retrieval
+    num_threads: int = 8,  # Original working value
 ) -> dict[str, list[SearchResult]]:
     """
     Batch search using BM25+RM3 with multi-threading.
     """
+    # Pre-validate index once to avoid race conditions
+    _ = get_searcher()
+    
     def search_single(qid_query):
         qid, query = qid_query
         searcher = get_searcher()
@@ -244,4 +250,5 @@ def batch_get_documents(
         searcher.close()
     
     return docs
+
 
