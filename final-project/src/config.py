@@ -119,7 +119,7 @@ class NeuralConfig:
     use_bf16: bool = True
     
     # Parallel processing
-    num_workers: int = 16  # More workers for data loading
+    num_workers: int = 8  # Original working value
 
 
 @dataclass
