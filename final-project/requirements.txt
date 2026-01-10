@@ -1,0 +1,23 @@
+# ROBUST04 Ranking Competition Dependencies
+# Core retrieval
+pyserini>=0.22.0
+faiss-cpu>=1.7.4
+
+# Deep learning
+torch>=2.0.0
+transformers>=4.35.0
+sentence-transformers>=2.2.2
+accelerate>=0.24.0
+
+# Evaluation
+pytrec_eval>=0.5
+
+# Text processing
+langchain>=0.1.0
+langchain-text-splitters>=0.0.1
+
+# Utilities
+tqdm>=4.65.0
+scikit-learn>=1.2.0
+numpy>=1.24.0
+
